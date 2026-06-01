@@ -8,19 +8,36 @@
     <h2>DATOS DEL USUARIO</h2>
     <a th:href="@{/}">REGRESAR</a>
     <br/><br/>
-    <form th:action="@{/guardar}" method="POST" th:object="${usuario}">
-        <label>ID:</label>
-        <input type="number" th:field="*{id}" required/><br/><br/>
+    <form th:action="@{/guardar}" th:method="post" th:object="${usuario}">
+
+        <input type="hidden" th:field="*{id}"/>
+
         <label>NOMBRE:</label>
-        <input type="text" th:field="*{nombre}" required/><br/><br/>
+        <input type="text" th:field="*{nombre}"/>
+        <span th:if="${#fields.hasErrors('nombre')}"
+              th:errors="*{nombre}" style="color:red"></span>
+        <br/><br/>
+
         <label>EMAIL:</label>
-        <input type="email" th:field="*{email}"/><br/><br/>
+        <input type="email" th:field="*{email}"/>
+        <span th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}" style="color:red"></span>
+        <br/><br/>
+
         <label>PASSWORD:</label>
-        <input type="password" th:field="*{password}"/><br/><br/>
+        <input type="password" th:field="*{password}"/>
+        <span th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}" style="color:red"></span>
+        <br/><br/>
+
         <label>TELEFONO:</label>
-        <input type="text" th:field="*{telefono}"/><br/><br/>
+        <input type="text" th:field="*{telefono}"/>
+        <br/><br/>
+
         <label>CIUDAD:</label>
-        <input type="text" th:field="*{ciudad}"/><br/><br/>
+        <input type="text" th:field="*{ciudad}"/>
+        <br/><br/>
+
         <input type="reset" value="LIMPIAR"/>
         &nbsp;
         <input type="submit" value="GUARDAR"/>
