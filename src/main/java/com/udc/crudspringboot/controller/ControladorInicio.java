@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ControladorInicio {
@@ -23,7 +24,20 @@ public class ControladorInicio {
     }
 
     @GetMapping("/agregar")
-    public String agregar(Usuario usuario) {
+    public String agregar(Model modelo) {
+        // Usuario vacío para el formulario nuevo
+        Usuario usuario = new Usuario();
+        modelo.addAttribute("usuario", usuario);
+        return "modificar";
+    }
+
+    @GetMapping("/editar")
+    public String editar(@RequestParam("id") Long id, Model modelo) {
+        // Buscar usuario por id y cargarlo en el formulario
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
+        usuario = usuarioServicio.buscar(usuario);
+        modelo.addAttribute("usuario", usuario);
         return "modificar";
     }
 
@@ -34,9 +48,10 @@ public class ControladorInicio {
     }
 
     @GetMapping("/eliminar")
-    public String eliminar(Usuario usuario) {
+    public String eliminar(@RequestParam("id") Long id) {
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
         usuarioServicio.eliminar(usuario);
         return "redirect:/";
     }
 }
-

@@ -8,9 +8,9 @@
     <h2>DATOS DEL USUARIO</h2>
     <a th:href="@{/}">REGRESAR</a>
     <br/><br/>
-    <form th:action="@{/guardar}" method="POST" th:object="${usuario}">
+    <form th:action="@{/guardar}" th:method="post" th:object="${usuario}">
         <label>ID:</label>
-        <input type="number" th:field="*{id}" required/><br/><br/>
+        <input type="number" th:field="*{id}"/><br/><br/>
         <label>NOMBRE:</label>
         <input type="text" th:field="*{nombre}" required/><br/><br/>
         <label>EMAIL:</label>
