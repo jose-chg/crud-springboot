@@ -2,10 +2,12 @@ package com.UDC.crudspringboot.controller;
 
 import com.UDC.crudspringboot.model.Usuario;
 import com.UDC.crudspringboot.service.IUsuarioServicio;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,15 +27,12 @@ public class ControladorInicio {
 
     @GetMapping("/agregar")
     public String agregar(Model modelo) {
-        // Usuario vacío para el formulario nuevo
-        Usuario usuario = new Usuario();
-        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("usuario", new Usuario());
         return "modificar";
     }
 
     @GetMapping("/editar")
     public String editar(@RequestParam("id") Long id, Model modelo) {
-        // Buscar usuario por id y cargarlo en el formulario
         Usuario usuario = new Usuario();
         usuario.setId(id);
         usuario = usuarioServicio.buscar(usuario);
@@ -41,8 +40,22 @@ public class ControladorInicio {
         return "modificar";
     }
 
-    @PostMapping("/guardar")
-    public String guardar(Usuario usuario) {
+   @PostMapping("/guardar")
+    public String guardar(@Valid Usuario usuario, Errors errores, Model modelo) {
+        // Validación manual
+        if (usuario.getNombre() == null || usuario.getNombre().trim().isEmpty()) {
+            errores.rejectValue("nombre", "error.nombre", "El nombre es requerido");
+        }
+        if (usuario.getEmail() == null || usuario.getEmail().trim().isEmpty()) {
+            errores.rejectValue("email", "error.email", "El email es requerido");
+        }
+        if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+            errores.rejectValue("password", "error.password", "El password es requerido");
+        }
+        if (errores.hasErrors()) {
+            modelo.addAttribute("usuario", usuario);
+            return "modificar";
+        }
         usuarioServicio.guardar(usuario);
         return "redirect:/";
     }
