@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Datos de la Enfermedad</title>
+</head>
+<body>
+
+    <header th:replace="~{plantillas/partes :: cabecero}"></header>
+
+    <h2>DATOS DE LA ENFERMEDAD</h2>
+    <a th:href="@{/enfermedades/}">REGRESAR</a>
+    <br/><br/>
+
+    <form th:action="@{/enfermedades/guardar}" th:method="post" th:object="${enfermedad}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>NOMBRE:</label>
+        <input type="text" th:field="*{nombre}"/>
+        <span th:if="${#fields.hasErrors('nombre')}"
+              th:errors="*{nombre}" style="color:red"></span>
+        <br/><br/>
+
+        <label>NOMBRE CIENTÍFICO:</label>
+        <input type="text" th:field="*{nombreCientifico}"/>
+        <br/><br/>
+
+        <label>NIVEL DE GRAVEDAD:</label>
+        <select th:field="*{nivelGravedad}">
+            <option value="">-- Seleccione --</option>
+            <option value="LEVE">LEVE</option>
+            <option value="MODERADA">MODERADA</option>
+            <option value="GRAVE">GRAVE</option>
+            <option value="CRITICA">CRÍTICA</option>
+        </select>
+        <span th:if="${#fields.hasErrors('nivelGravedad')}"
+              th:errors="*{nivelGravedad}" style="color:red"></span>
+        <br/><br/>
+
+        <label>SÍNTOMAS:</label><br/>
+        <textarea th:field="*{sintomas}" rows="4" cols="50"></textarea>
+        <br/><br/>
+
+        <label>MEDICAMENTOS:</label><br/>
+        <textarea th:field="*{medicamentos}" rows="4" cols="50"></textarea>
+        <br/><br/>
+
+        <label>¿ES CONTAGIOSA?</label>
+        <input type="checkbox" th:field="*{esContagiosa}"/>
+        <br/><br/>
+
+        <label>¿ES CUBIERTA POR POS?</label>
+        <input type="checkbox" th:field="*{esCubiertaPorPos}"/>
+        <br/><br/>
+
+        <label>¿REQUIERE INCAPACIDAD?</label>
+        <input type="checkbox" th:field="*{requiereIncapacidad}"/>
+        <br/><br/>
+
+        <input type="reset" value="LIMPIAR"/>
+        &nbsp;
+        <input type="submit" value="GUARDAR"/>
+    </form>
+
+    <footer th:replace="~{plantillas/partes :: pie}"></footer>
+
+</body>
+</html>

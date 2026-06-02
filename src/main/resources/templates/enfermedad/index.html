@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Enfermedades</title>
+</head>
+<body>
+
+    <header th:replace="~{plantillas/partes :: cabecero}"></header>
+
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="CERRAR SESIÓN"/>
+    </form>
+
+    <h2>LISTA DE ENFERMEDADES</h2>
+    <a th:href="@{/enfermedades/agregar}">AGREGAR ENFERMEDAD</a>
+    <br/><br/>
+    <a th:href="@{/}">IR A USUARIOS</a>
+    <hr>
+
+    <div th:if="${enfermedades != null and !enfermedades.empty}">
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>NOMBRE CIENTÍFICO</th>
+                <th>NIVEL GRAVEDAD</th>
+                <th>CONTAGIOSA</th>
+                <th>CUBRE POS</th>
+                <th>INCAPACIDAD</th>
+                <th>ACCIONES</th>
+            </tr>
+            <tr th:each="e: ${enfermedades}">
+                <td th:text="${e.id}"></td>
+                <td th:text="${e.nombre}"></td>
+                <td th:text="${e.nombreCientifico}"></td>
+                <td th:text="${e.nivelGravedad}"></td>
+                <td th:text="${e.esContagiosa} ? 'SÍ' : 'NO'"></td>
+                <td th:text="${e.esCubiertaPorPos} ? 'SÍ' : 'NO'"></td>
+                <td th:text="${e.requiereIncapacidad} ? 'SÍ' : 'NO'"></td>
+                <td>
+                    <a th:href="@{/enfermedades/editar(id=${e.id})}">EDITAR</a>
+                    &nbsp;
+                    <a th:href="@{/enfermedades/eliminar(id=${e.id})}">ELIMINAR</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${enfermedades == null or enfermedades.empty}">
+        <p>La lista de Enfermedades está Vacía</p>
+    </div>
+
+    <footer th:replace="~{plantillas/partes :: pie}"></footer>
+
+</body>
+</html>
