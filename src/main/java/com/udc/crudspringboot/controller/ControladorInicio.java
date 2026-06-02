@@ -42,7 +42,9 @@ public class ControladorInicio {
 
    @PostMapping("/guardar")
     public String guardar(@Valid Usuario usuario, Errors errores, Model modelo) {
-        // Validación manual
+        if (usuario.getId() == null) {
+            errores.rejectValue("id", "error.id", "El ID es requerido");
+        }
         if (usuario.getNombre() == null || usuario.getNombre().trim().isEmpty()) {
             errores.rejectValue("nombre", "error.nombre", "El nombre es requerido");
         }
@@ -59,7 +61,6 @@ public class ControladorInicio {
         usuarioServicio.guardar(usuario);
         return "redirect:/";
     }
-
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam("id") Long id) {
         Usuario usuario = new Usuario();

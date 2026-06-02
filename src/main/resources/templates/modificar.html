@@ -5,42 +5,52 @@
     <title>Datos del Usuario</title>
 </head>
 <body>
-    <h2>DATOS DEL USUARIO</h2>
-    <a th:href="@{/}">REGRESAR</a>
+
+    <header th:replace="~{plantillas/partes :: cabecero}"></header>
+
+    <h2 th:text="#{formulario.titulo}">DATOS DEL USUARIO</h2>
+    <a th:href="@{/}" th:text="#{formulario.regresar}">REGRESAR</a>
     <br/><br/>
     <form th:action="@{/guardar}" th:method="post" th:object="${usuario}">
 
-        <input type="hidden" th:field="*{id}"/>
+        <label th:text="#{formulario.id}">ID:</label>
+        <input type="number" th:field="*{id}"/>
+        <span th:if="${#fields.hasErrors('id')}"
+              th:errors="*{id}" style="color:red"></span>
+        <br/><br/>
 
-        <label>NOMBRE:</label>
+        <label th:text="#{formulario.nombre}">NOMBRE:</label>
         <input type="text" th:field="*{nombre}"/>
         <span th:if="${#fields.hasErrors('nombre')}"
               th:errors="*{nombre}" style="color:red"></span>
         <br/><br/>
 
-        <label>EMAIL:</label>
+        <label th:text="#{formulario.email}">EMAIL:</label>
         <input type="email" th:field="*{email}"/>
         <span th:if="${#fields.hasErrors('email')}"
               th:errors="*{email}" style="color:red"></span>
         <br/><br/>
 
-        <label>PASSWORD:</label>
+        <label th:text="#{formulario.password}">PASSWORD:</label>
         <input type="password" th:field="*{password}"/>
         <span th:if="${#fields.hasErrors('password')}"
               th:errors="*{password}" style="color:red"></span>
         <br/><br/>
 
-        <label>TELEFONO:</label>
+        <label th:text="#{formulario.telefono}">TELEFONO:</label>
         <input type="text" th:field="*{telefono}"/>
         <br/><br/>
 
-        <label>CIUDAD:</label>
+        <label th:text="#{formulario.ciudad}">CIUDAD:</label>
         <input type="text" th:field="*{ciudad}"/>
         <br/><br/>
 
-        <input type="reset" value="LIMPIAR"/>
+        <input type="reset" th:value="#{formulario.limpiar}"/>
         &nbsp;
-        <input type="submit" value="GUARDAR"/>
+        <input type="submit" th:value="#{formulario.guardar}"/>
     </form>
+
+    <footer th:replace="~{plantillas/partes :: pie}"></footer>
+
 </body>
 </html>
